@@ -18,18 +18,20 @@ env:
 source:
   mysql:
     enabled: false
-    # You can optionally specify the exact tag of the database server:
-    # image:
-    #   tag: 8.0
-    # You can specify the already existing PVC with the database:
-    # persistence:
-    #   existingClaim: "my-database"
-    # The same approach is for other databases, including target ones.
   mariadb:
     enabled: false
   postgresql:
     enabled: false
 
+# You can optionally specify the exact tag of the database server and connect
+# an existing PVC like this:
+# source-mariadb:
+#   image:
+#     tag: 10.5.13-debian-10-r32
+#   primary:
+#     persistence:
+#       existingClaim: "my-source-database"
+# The same approach is for other databases, including target ones.
 
 target:
   mysql:
