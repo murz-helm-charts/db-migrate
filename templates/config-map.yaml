@@ -36,8 +36,12 @@ data:
 
   source-connect.sh: |
     #!/bin/sh
+
+    # @todo Add support for differend databases.
     mysql -h $SOURCE_DATABASE_HOST -u $SOURCE_DATABASE_USER -p$SOURCE_DATABASE_PASSWORD $SOURCE_DATABASE_NAME
 
   traget-connect.sh: |
     #!/bin/sh
+
+    # @todo Create a shared library and reuse.
     PGPASSWORD=$TARGET_DATABASE_PASSWORD psql -h $TARGET_DATABASE_HOST -U $TARGET_DATABASE_USER -d $TARGET_DATABASE_NAME

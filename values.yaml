@@ -3,14 +3,14 @@ env:
   # Fill in here connection detail for the source database:
   SOURCE_DATABASE_TYPE: "mysql"
   SOURCE_DATABASE_NAME: "my_database"
-  SOURCE_DATABASE_HOST: "db-migrate-mariadb"
+  SOURCE_DATABASE_HOST: "{{ .Release.Name }}-source-db"
   SOURCE_DATABASE_USER: "root"
   SOURCE_DATABASE_PASSWORD: "my_mysql_password"
 
   # Fill in here connection detail for the target database:
   TARGET_DATABASE_TYPE: "postgresql"
   TARGET_DATABASE_NAME: "pg_default"
-  TARGET_DATABASE_HOST: "db-migrate-postgresql"
+  TARGET_DATABASE_HOST: "{{ .Release.Name }}-target-db"
   TARGET_DATABASE_USER: "postgres"
   TARGET_DATABASE_PASSWORD: "my_pg_password"
 
@@ -30,6 +30,7 @@ source:
   postgresql:
     enabled: false
 
+
 target:
   mysql:
     enabled: false
@@ -37,3 +38,18 @@ target:
     enabled: false
   postgresql:
     enabled: false
+
+
+source-mariadb:
+    nameOverride: source-db
+source-mysql:
+    nameOverride: source-db
+source-postgresql:
+    nameOverride: source-db
+
+target-mariadb:
+    nameOverride: target-db
+target-mysql:
+    nameOverride: target-db
+target-postgresql:
+    nameOverride: target-db
