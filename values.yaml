@@ -1,0 +1,39 @@
+
+env:
+  # Fill in here connection detail for the source database:
+  SOURCE_DATABASE_TYPE: "mysql"
+  SOURCE_DATABASE_NAME: "my_database"
+  SOURCE_DATABASE_HOST: "db-migrate-mariadb"
+  SOURCE_DATABASE_USER: "root"
+  SOURCE_DATABASE_PASSWORD: "my_mysql_password"
+
+  # Fill in here connection detail for the target database:
+  TARGET_DATABASE_TYPE: "postgresql"
+  TARGET_DATABASE_NAME: "pg_default"
+  TARGET_DATABASE_HOST: "db-migrate-postgresql"
+  TARGET_DATABASE_USER: "postgres"
+  TARGET_DATABASE_PASSWORD: "my_pg_password"
+
+# Enable databases that are used in the migration:
+source:
+  mysql:
+    enabled: false
+    # You can optionally specify the exact tag of the database server:
+    # image:
+    #   tag: 8.0
+    # You can specify the already existing PVC with the database:
+    # persistence:
+    #   existingClaim: "my-database"
+    # The same approach is for other databases, including target ones.
+  mariadb:
+    enabled: false
+  postgresql:
+    enabled: false
+
+target:
+  mysql:
+    enabled: false
+  mariadb:
+    enabled: false
+  postgresql:
+    enabled: false

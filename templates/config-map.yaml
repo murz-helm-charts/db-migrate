@@ -1,0 +1,43 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-scripts
+
+data:
+  job.sh: |
+    apt -qq update && apt -qq -y install postgresql-client mariadb-client
+    pip -q install etlalchemy psycopg2 mysqlclient
+    python /script.py
+
+  script.py: |
+    import os
+    from etlalchemy import ETLAlchemySource, ETLAlchemyTarget
+
+    sourceConnection = "%s://%s:%s@%s/%s" % (
+      os.environ.get('SOURCE_DATABASE_TYPE'),
+      os.environ.get('SOURCE_DATABASE_USER'),
+      os.environ.get('SOURCE_DATABASE_PASSWORD'),
+      os.environ.get('SOURCE_DATABASE_HOST'),
+      os.environ.get('SOURCE_DATABASE_NAME'),
+    )
+
+    targetConnection = "%s://%s:%s@%s/%s" % (
+      os.environ.get('TARGET_DATABASE_TYPE'),
+      os.environ.get('TARGET_DATABASE_USER'),
+      os.environ.get('TARGET_DATABASE_PASSWORD'),
+      os.environ.get('TARGET_DATABASE_HOST'),
+      os.environ.get('TARGET_DATABASE_NAME'),
+    )
+
+    source = ETLAlchemySource(sourceConnection)
+    target = ETLAlchemyTarget(targetConnection)
+    target.addSource(source)
+    target.migrate()
+
+  source-connect.sh: |
+    #!/bin/sh
+    mysql -h $SOURCE_DATABASE_HOST -u $SOURCE_DATABASE_USER -p$SOURCE_DATABASE_PASSWORD $SOURCE_DATABASE_NAME
+
+  traget-connect.sh: |
+    #!/bin/sh
+    PGPASSWORD=$TARGET_DATABASE_PASSWORD psql -h $TARGET_DATABASE_HOST -U $TARGET_DATABASE_USER -d $TARGET_DATABASE_NAME

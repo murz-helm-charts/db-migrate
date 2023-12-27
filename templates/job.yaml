@@ -1,0 +1,30 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: "{{ .Release.Name }}-job-{{ .Release.Revision }}"
+spec:
+  template:
+    metadata:
+      labels:
+        job-version: "{{ .Release.Revision }}"
+    spec:
+      containers:
+      - name: python
+        image: python:2.7
+        command: ["sh", "/job.sh"]
+        # command: ["sleep", "infinity"]
+        envFrom:
+        - secretRef:
+            name: "{{ .Release.Name }}-env-{{ .Release.Revision }}"
+        volumeMounts:
+        - name: scripts
+          mountPath: /job.sh
+          subPath: "job.sh"
+        - name: scripts
+          mountPath: /script.py
+          subPath: "script.py"
+      volumes:
+        - name: scripts
+          configMap:
+            name: {{ .Release.Name }}-scripts
+      restartPolicy: Never

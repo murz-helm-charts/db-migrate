@@ -1,0 +1,45 @@
+apiVersion: v2
+name: db-migrate
+description: A tool to migrate data from one database to another, supports MySQL, MariaDB, PostgreSQL.
+version: 0.1.0
+
+dependencies:
+  - alias: source-mariadb
+    name: mariadb
+    condition: source.mariadb.enabled
+    version: 14.1.4
+    repository: https://charts.bitnami.com/bitnami
+
+  - alias: source-mysql
+    name: mysql
+    condition: source.mysql.enabled
+    version: 9.15.0
+    repository: https://charts.bitnami.com/bitnami
+
+  - alias: source-postgresql
+    name: postgresql
+    condition: source.postgresql.enabled
+    version: 13.2.25
+    repository: https://charts.bitnami.com/bitnami
+
+  - alias: target-mariadb
+    name: mariadb
+    condition: target.mariadb.enabled
+    version: 14.1.4
+    repository: https://charts.bitnami.com/bitnami
+
+  - alias: target-mysql
+    name: mysql
+    condition: target.mysql.enabled
+    version: 9.15.0
+    repository: https://charts.bitnami.com/bitnami
+
+  - alias: target-postgresql
+    name: postgresql
+    condition: target.postgresql.enabled
+    version: 13.2.25
+    repository: https://charts.bitnami.com/bitnami
+
+maintainers:
+  - name: Alexey Murz Korepov
+    email: MurzNN@gmail.com

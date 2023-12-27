@@ -1,0 +1,18 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: "{{ .Release.Name }}-job-pgloader-{{ .Release.Revision }}"
+spec:
+  template:
+    metadata:
+      labels:
+        job-version: "{{ .Release.Revision }}"
+    spec:
+      containers:
+      - name: pgloader
+        image: dimitri/pgloader
+        # command: ["sleep", "infinity"]
+        envFrom:
+        - secretRef:
+            name: "{{ .Release.Name }}-env-{{ .Release.Revision }}"
+      restartPolicy: Never
