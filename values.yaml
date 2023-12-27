@@ -23,6 +23,14 @@ source:
   postgresql:
     enabled: false
 
+target:
+  mysql:
+    enabled: false
+  mariadb:
+    enabled: false
+  postgresql:
+    enabled: false
+
 # You can optionally specify the exact tag of the database server and connect
 # an existing PVC like this:
 # source-mariadb:
@@ -32,15 +40,6 @@ source:
 #     persistence:
 #       existingClaim: "my-source-database"
 # The same approach is for other databases, including target ones.
-
-target:
-  mysql:
-    enabled: false
-  mariadb:
-    enabled: false
-  postgresql:
-    enabled: false
-
 
 source-mariadb:
     nameOverride: source-db
