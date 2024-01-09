@@ -12,7 +12,17 @@ spec:
       - name: pgloader
         image: dimitri/pgloader
         # command: ["sleep", "infinity"]
+        command: ["pgloader", "/db-migrate.load"]
         envFrom:
         - secretRef:
-            name: "{{ .Release.Name }}-env-{{ .Release.Revision }}"
+            name: "{{ .Release.Name }}-job-{{ .Release.Revision }}-env"
+        volumeMounts:
+        - name: pgloader
+          mountPath: /db-migrate.load
+          subPath: "db-migrate.load"
+      volumes:
+        - name: pgloader
+          secret:
+            secretName: "{{ .Release.Name }}-job-{{ .Release.Revision }}-pgloader"
+
       restartPolicy: Never

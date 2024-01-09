@@ -1,7 +1,7 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: "{{ .Release.Name }}-job-{{ .Release.Revision }}"
+  name: "{{ .Release.Name }}-job-etlalchemy-{{ .Release.Revision }}"
 spec:
   template:
     metadata:
@@ -15,7 +15,7 @@ spec:
         # command: ["sleep", "infinity"]
         envFrom:
         - secretRef:
-            name: "{{ .Release.Name }}-env-{{ .Release.Revision }}"
+            name: "{{ .Release.Name }}-job-{{ .Release.Revision }}-env"
         volumeMounts:
         - name: scripts
           mountPath: /job.sh
